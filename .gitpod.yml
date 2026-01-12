@@ -1,0 +1,39 @@
+image: gitpod/workspace-full-vnc
+
+tasks:
+  - name: Setup Android SDK
+    init: |
+      echo "Installing Android SDK and dependencies..."
+      apt-get update -qq
+      apt-get install -y -qq android-sdk android-sdk-build-tools android-sdk-platform-tools
+      
+      # Set environment variables
+      export ANDROID_HOME=/usr/lib/android-sdk
+      export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
+      
+      echo "Android SDK installed successfully"
+  
+  - name: Build APK
+    command: |
+      cd /workspace/anticheat-injector
+      chmod +x gradlew
+      ./gradlew assembleDebug
+      
+      # Mostrar ruta del APK compilado
+      echo "✅ APK compilado exitosamente en:"
+      echo "📦 app/build/outputs/apk/debug/app-debug.apk"
+      
+      # Copiar a una ubicación accesible
+      mkdir -p /workspace/build-output
+      cp app/build/outputs/apk/debug/app-debug.apk /workspace/build-output/anticheat-injector.apk
+      echo "✅ APK copiado a: /workspace/build-output/anticheat-injector.apk"
+
+vscode:
+  extensions:
+    - vscjava.vscode-java-pack
+    - vscjava.vscode-gradle
+    - ms-vscode.makefile-tools
+
+ports:
+  - port: 5900
+    onOpen: open-preview
