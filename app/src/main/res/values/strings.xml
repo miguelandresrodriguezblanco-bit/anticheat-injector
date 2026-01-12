@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Anti-Cheat Injector</string>
+    <string name="status_ready">Estado: Listo</string>
+    <string name="status_running">Estado: En ejecución</string>
+    <string name="status_error">Estado: Error</string>
+</resources>
